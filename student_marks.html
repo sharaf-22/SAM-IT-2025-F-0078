@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f2f6;
+            padding: 15px;
+            margin: 0;
+            color: #222;
+        }
+
+        .box {
+            background: white;
+            max-width: 850px;
+            width: 100%;
+            margin: 10px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 18px;
+            box-shadow: 0 2px 5px #ddd;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin: 5px 0 40px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 14px;
+            margin: 5px 0 22px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin: 18px 0 28px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 19px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #1976d2;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 480px;
+            border-collapse: collapse;
+            font-size: 17px;
+        }
+
+        th, td {
+            border: 1px solid #d5d7dc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #edf0f6;
+        }
+
+        td input[type="number"] {
+            margin: 0;
+            min-width: 65px;
+            padding: 12px;
+        }
+
+        .average-row {
+            background: #f7f8fa;
+            font-weight: bold;
+        }
+
+        .button-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background: #204d85;
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #163a68;
+        }
+
+        #output {
+            display: none;
+        }
+
+        .result-message {
+            text-align: center;
+            color: #237447;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 25px;
+        }
+
+        .result-details {
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 500px) {
+            .box {
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+                margin-bottom: 30px;
+            }
+
+            .field-label,
+            .section-title {
+                font-size: 18px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FIRST PAGE: STUDENT DETAILS -->
+    <div class="box" id="formPage">
+
+        <h1>Student Marks  Calculator</h1>
+
+        <form id="studentForm">
+
+            <label for="name" class="field-label">Name</label>
+            <input type="text" id="name"
+                   placeholder="Enter student name" required>
+
+            <p class="section-title">Gender</p>
+
+            <div class="options">
+                <label>
+                    <input type="radio" name="gender"
+                           value="Male" required>
+                    Male
+                </label>
+
+                <label>
+                    <input type="radio" name="gender"
+                           value="Female">
+                    Female
+                </label>
+            </div>
+
+            <p class="section-title">Course</p>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="course"
+                           value="HNDIT">
+                    HNDIT
+                </label>
+
+                <label>
+                    <input type="checkbox" name="course"
+                           value="HNDSE">
+                    HNDSE
+                </label>
+
+                <label>
+                    <input type="checkbox" name="course"
+                           value="HNDJA">
+                    HNDJA
+                </label>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks (0–100)</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Machine Learning</td>
+                            <td>
+                                <input type="number" id="mark1"
+                                       min="0" max="100"
+                                       step="1" required>
+                            </td>
+                            <td id="grade1">-</td>
+                        </tr>
+
+                        <tr>
+                            <td>Computer Network</td>
+                            <td>
+                                <input type="number" id="mark2"
+                                       min="0" max="100"
+                                       step="1" required>
+                            </td>
+                            <td id="grade2">-</td>
+                        </tr>
+
+                        <tr>
+                            <td>Architecture</td>
+                            <td>
+                                <input type="number" id="mark3"
+                                       min="0" max="100"
+                                       step="1" required>
+                            </td>
+                            <td id="grade3">-</td>
+                        </tr>
+
+                        <tr class="average-row">
+                            <td colspan="2">Average</td>
+                            <td id="average">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="button-area">
+                <button type="submit">Calculate</button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- SECOND PAGE: STUDENT RESULTS -->
+    <div class="box" id="output">
+
+        <h1>Student Marks &amp; Grade Calculator</h1>
+
+        <h2>Student Results</h2>
+
+        <div class="result-details">
+            <p id="resultName"></p>
+            <p id="resultGender"></p>
+            <p id="resultCourse"></p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks (0–100)</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Machine Learning</td>
+                        <td id="resultMark1"></td>
+                        <td id="resultGrade1"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Computer Network</td>
+                        <td id="resultMark2"></td>
+                        <td id="resultGrade2"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Architecture</td>
+                        <td id="resultMark3"></td>
+                        <td id="resultGrade3"></td>
+                    </tr>
+
+                    <tr class="average-row">
+                        <td colspan="2">Average</td>
+                        <td id="resultAverage"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 id="total" style="text-align:center;"></h3>
+
+        <p class="result-message" id="success"></p>
+
+        <div class="button-area">
+            <button type="button" onclick="goBack()">Back</button>
+          
+        </div>
+
+    </div>
+
+
+    <script>
+        const form = document.getElementById("studentForm");
+
+        function calculateGrade(mark) {
+            if (mark >= 75) {
+                return "A";
+            } else if (mark >= 65) {
+                return "B";
+            } else if (mark >= 50) {
+                return "C";
+            } else if (mark >= 35) {
+                return "S";
+            } else {
+                return "F";
+            }
+        }
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+
+            const genderInput = document.querySelector(
+                'input[name="gender"]:checked'
+            );
+
+            if (!genderInput) {
+                alert("Please select your gender.");
+                return;
+            }
+
+            const gender = genderInput.value;
+
+            const courses = Array.from(
+                document.querySelectorAll(
+                    'input[name="course"]:checked'
+                )
+            ).map(function(item) {
+                return item.value;
+            });
+
+            const marks = [
+                document.getElementById("mark1").value,
+                document.getElementById("mark2").value,
+                document.getElementById("mark3").value
+            ].map(Number);
+
+            if (marks.some(function(mark) {
+                return !Number.isFinite(mark) ||
+                       mark < 0 || mark > 100;
+            })) {
+                alert("Enter marks between 0 and 100.");
+                return;
+            }
+
+            const total = marks.reduce(function(sum, mark) {
+                return sum + mark;
+            }, 0);
+
+            const average = total / marks.length;
+
+            const grades = marks.map(calculateGrade);
+
+            // Fill result page with student information
+            document.getElementById("resultName").textContent =
+                "Name: " + name;
+
+            document.getElementById("resultGender").textContent =
+                "Gender: " + gender;
+
+            document.getElementById("resultCourse").textContent =
+                "Course: " +
+                (courses.length > 0 ? courses.join(", ") : "Not selected");
+
+            // Show marks and grades
+            document.getElementById("resultMark1").textContent = marks[0];
+            document.getElementById("resultMark2").textContent = marks[1];
+            document.getElementById("resultMark3").textContent = marks[2];
+
+            document.getElementById("resultGrade1").textContent = grades[0];
+            document.getElementById("resultGrade2").textContent = grades[1];
+            document.getElementById("resultGrade3").textContent = grades[2];
+
+            document.getElementById("resultAverage").textContent =
+                average.toFixed(2);
+
+            document.getElementById("total").textContent =
+                "Total Marks: " + total + " / 300";
+
+            document.getElementById("success").textContent =
+                name + "'s results calculated successfully.";
+
+            // Hide first page and display second page
+            document.getElementById("formPage").style.display = "none";
+            document.getElementById("output").style.display = "block";
+
+            window.scrollTo(0, 0);
+        });
+
+        function goBack() {
+            document.getElementById("output").style.display = "none";
+            document.getElementById("formPage").style.display = "block";
+
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
